@@ -1,0 +1,332 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Quki</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Outfit:wght@400;500;600&display=swap">
+<style>
+  /* Layout: one centered column. Soccer card on top, the offer under it, then the link buttons, with faint animal silhouettes behind everything. */
+  :root {
+    --ink: #07050c;
+    --panel: #120b1f;
+    --edge: #2b1c47;
+    --violet: #8b5cf6;
+    --violet-hi: #c4b5fd;
+    --violet-deep: #5b21b6;
+    --text: #f3edff;
+    --muted: #a99bcb;
+    --font-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+    --font-body: "Outfit", "Segoe UI", system-ui, sans-serif;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--ink);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .page {
+    position: relative;
+    overflow: hidden;
+    min-height: 100%;
+    padding-block: 44px 36px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    background:
+      radial-gradient(60% 40% at 50% 0%, rgba(124, 58, 237, 0.28), transparent 70%),
+      radial-gradient(50% 30% at 50% 100%, rgba(91, 33, 182, 0.22), transparent 70%),
+      var(--ink);
+  }
+
+  /* Background animals */
+  .bg-animal {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    opacity: 0.07;
+    pointer-events: none;
+    --a: var(--violet);
+    --b: var(--ink);
+    --c: var(--violet-hi);
+  }
+  .bg-animal.one { top: 60px; left: -110px; transform: rotate(-14deg); }
+  .bg-animal.two { bottom: 120px; right: -120px; transform: rotate(12deg); }
+
+  .col {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 420px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  /* Soccer card */
+  .card-wrap {
+    width: min(300px, 100%);
+    filter: drop-shadow(0 18px 38px rgba(124, 58, 237, 0.4));
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .card {
+    --cut: 28px;
+    aspect-ratio: 300 / 410;
+    max-width: 100%;
+    padding: 3px;
+    background: linear-gradient(160deg, #e9ddff 0%, #8b5cf6 38%, #4c1d95 68%, #a78bfa 100%);
+    clip-path: polygon(0 var(--cut), var(--cut) 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, var(--cut) 100%, 0 calc(100% - var(--cut)));
+  }
+
+  .card-face {
+    --cut: 26px;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 18px 22px;
+    overflow: hidden;
+    background:
+      radial-gradient(70% 45% at 50% 38%, rgba(139, 92, 246, 0.5), transparent 72%),
+      repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.025) 0 2px, transparent 2px 14px),
+      linear-gradient(180deg, #1a0d33 0%, #0b0615 100%);
+    clip-path: polygon(0 var(--cut), var(--cut) 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, var(--cut) 100%, 0 calc(100% - var(--cut)));
+  }
+
+  .card-face::after {
+    content: "";
+    position: absolute;
+    inset: -20% -60%;
+    background: linear-gradient(100deg, transparent 42%, rgba(255, 255, 255, 0.14) 50%, transparent 58%);
+    transform: translateX(-70%);
+    animation: shine 7s ease-in-out 1.2s infinite;
+    pointer-events: none;
+  }
+
+  .hero {
+    flex: 1;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    min-height: 0;
+  }
+  .hero svg {
+    width: 58%;
+    max-width: 170px;
+    height: auto;
+    aspect-ratio: 1;
+    filter: drop-shadow(0 0 22px rgba(167, 139, 250, 0.55));
+    --a: url(#gv);
+    --b: #12081f;
+    --c: #f5efff;
+  }
+
+  .plate { width: 100%; text-align: center; }
+  .plate h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(54px, 21vw, 76px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: 0.06em;
+    text-indent: 0.06em;
+    text-transform: uppercase;
+    color: var(--violet-hi);
+    background: linear-gradient(180deg, #ffffff 10%, #b794ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .plate .rule {
+    height: 2px;
+    margin: 10px auto 9px;
+    width: 72%;
+    background: linear-gradient(90deg, transparent, var(--violet), transparent);
+  }
+  .plate .name {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Offer */
+  .offer { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .offer h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1;
+    text-wrap: balance;
+  }
+  .offer p { margin: 0; color: var(--muted); max-width: 30ch; text-wrap: balance; font-size: 20px; letter-spacing: 0.06em; font-variant-caps: all-small-caps; }
+  .offer p strong { color: var(--text); font-weight: 600; }
+
+  /* Buttons */
+  .links { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    padding: 14px 16px;
+    border: 1px solid var(--edge);
+    border-radius: 14px;
+    background: var(--panel);
+    color: var(--text);
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.15s, border-color 0.15s, background 0.15s, box-shadow 0.15s;
+  }
+  .btn:hover { transform: translateY(-2px); border-color: var(--violet); box-shadow: 0 8px 24px rgba(124, 58, 237, 0.28); }
+  .btn:focus-visible { outline: 2px solid var(--violet-hi); outline-offset: 3px; }
+
+  .btn .ico { flex: none; width: 32px; height: 32px; --a: var(--violet); --b: var(--panel); --c: var(--violet-hi); }
+  .btn .lbl { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+  .btn .go { flex: none; color: var(--violet-hi); font-size: 18px; }
+
+  .btn.main {
+    grid-column: 1 / -1;
+    padding: 18px 20px;
+    font-size: 20px;
+    border-color: transparent;
+    background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+    box-shadow: 0 10px 30px rgba(109, 40, 217, 0.45);
+  }
+  .btn.main:hover { border-color: transparent; box-shadow: 0 12px 34px rgba(139, 92, 246, 0.6); }
+  .btn.main .ico { width: 38px; height: 38px; --a: #ffffff; --b: #5b21b6; --c: #e9ddff; }
+  .btn.main .go { color: #fff; }
+  .btn.wide { grid-column: 1 / -1; }
+
+  .parade { display: flex; gap: 18px; opacity: 0.35; margin-top: 4px; }
+  .parade svg { width: 26px; height: 26px; --a: var(--violet); --b: var(--ink); --c: var(--violet-hi); }
+
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  @keyframes shine { 0%, 55% { transform: translateX(-70%); } 85%, 100% { transform: translateX(70%); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-wrap, .card-face::after { animation: none; }
+    .btn { transition: none; }
+  }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="gv" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e9ddff"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+
+    <symbol id="wolf" viewBox="0 0 64 64">
+      <polygon points="8,4 25,19 39,19 56,4 60,32 46,57 32,62 18,57 4,32" style="fill:var(--a)"/>
+      <polygon points="11,11 21,19 14,27" style="fill:var(--b)"/>
+      <polygon points="53,11 43,19 50,27" style="fill:var(--b)"/>
+      <polygon points="19,33 29,36 22,41" style="fill:var(--c)"/>
+      <polygon points="45,33 35,36 42,41" style="fill:var(--c)"/>
+      <polygon points="25,46 39,46 32,60" style="fill:var(--b)"/>
+      <polygon points="28,46 36,46 32,52" style="fill:var(--c)"/>
+    </symbol>
+
+    <symbol id="fox" viewBox="0 0 64 64">
+      <polygon points="3,5 24,20 40,20 61,5 59,34 32,62 5,34" style="fill:var(--a)"/>
+      <polygon points="6,34 25,41 32,62" style="fill:var(--c)"/>
+      <polygon points="58,34 39,41 32,62" style="fill:var(--c)"/>
+      <polygon points="9,12 21,20 12,27" style="fill:var(--b)"/>
+      <polygon points="55,12 43,20 52,27" style="fill:var(--b)"/>
+      <polygon points="18,31 28,34 21,38" style="fill:var(--b)"/>
+      <polygon points="46,31 36,34 43,38" style="fill:var(--b)"/>
+      <polygon points="28,55 36,55 32,62" style="fill:var(--b)"/>
+    </symbol>
+
+    <symbol id="owl" viewBox="0 0 64 64">
+      <polygon points="10,3 24,16 40,16 54,3 59,30 52,53 32,62 12,53 5,30" style="fill:var(--a)"/>
+      <circle cx="22" cy="32" r="10" style="fill:var(--c)"/>
+      <circle cx="42" cy="32" r="10" style="fill:var(--c)"/>
+      <circle cx="22" cy="32" r="5" style="fill:var(--b)"/>
+      <circle cx="42" cy="32" r="5" style="fill:var(--b)"/>
+      <polygon points="28,40 36,40 32,51" style="fill:var(--b)"/>
+    </symbol>
+
+    <symbol id="cat" viewBox="0 0 64 64">
+      <polygon points="5,3 24,18 40,18 59,3 61,34 47,57 17,57 3,34" style="fill:var(--a)"/>
+      <polygon points="9,10 20,18 11,27" style="fill:var(--b)"/>
+      <polygon points="55,10 44,18 53,27" style="fill:var(--b)"/>
+      <ellipse cx="21" cy="34" rx="7" ry="5" style="fill:var(--c)"/>
+      <ellipse cx="43" cy="34" rx="7" ry="5" style="fill:var(--c)"/>
+      <rect x="20" y="30" width="2.4" height="8" rx="1.2" style="fill:var(--b)"/>
+      <rect x="42" y="30" width="2.4" height="8" rx="1.2" style="fill:var(--b)"/>
+      <polygon points="28,44 36,44 32,49" style="fill:var(--b)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<main class="page">
+  <svg class="bg-animal one" viewBox="0 0 64 64" aria-hidden="true"><use href="#wolf"/></svg>
+  <svg class="bg-animal two" viewBox="0 0 64 64" aria-hidden="true"><use href="#fox"/></svg>
+
+  <div class="col">
+    <div class="card-wrap">
+      <div class="card">
+        <div class="card-face">
+          <div class="hero">
+            <svg viewBox="0 0 64 64" role="img" aria-label="Wolf"><use href="#wolf"/></svg>
+          </div>
+          <div class="plate">
+            <h1>Quki</h1>
+            <div class="rule"></div>
+            <p class="name" id="player-name">Your name</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="offer">
+      <h2>Best cheats</h2>
+      <p>Use code <strong>QUKI</strong> at <strong>visual.gg</strong> for a discount.</p>
+    </section>
+
+    <nav class="links" aria-label="Quki links">
+      <a class="btn main" href="https://visual.gg" target="_blank" rel="noopener noreferrer">
+        <svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#fox"/></svg>
+        <span class="lbl">visual.gg</span>
+        <span class="go" aria-hidden="true">&rarr;</span>
+      </a>
+      <a class="btn" href="https://store.steampowered.com/" target="_blank" rel="noopener noreferrer">
+        <svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#wolf"/></svg>
+        <span class="lbl">Steam</span>
+      </a>
+      <a class="btn" href="https://store.epicgames.com/" target="_blank" rel="noopener noreferrer">
+        <svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#owl"/></svg>
+        <span class="lbl">Epic Games</span>
+      </a>
+      <a class="btn wide" href="https://open.spotify.com/" target="_blank" rel="noopener noreferrer">
+        <svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><use href="#cat"/></svg>
+        <span class="lbl">Spotify</span>
+        <span class="go" aria-hidden="true">&rarr;</span>
+      </a>
+    </nav>
+
+    <div class="parade" aria-hidden="true">
+      <svg viewBox="0 0 64 64"><use href="#fox"/></svg>
+      <svg viewBox="0 0 64 64"><use href="#wolf"/></svg>
+      <svg viewBox="0 0 64 64"><use href="#owl"/></svg>
+      <svg viewBox="0 0 64 64"><use href="#cat"/></svg>
+    </div>
+  </div>
+</main>
+
+</body></html>
